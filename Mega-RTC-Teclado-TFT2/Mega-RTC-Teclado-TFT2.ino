@@ -27,6 +27,8 @@ MCUFRIEND_kbv tft;
 #define DARKGREY  0x7BEF
 #define ORANGE    0xFD20
 
+#define tiempo 3000
+
 
 
 const byte FILAS = 4;     // define numero de filas
@@ -60,6 +62,9 @@ char CLAVE_SALIR4[3] = "4#";
 char CLAVE_VER5[3] = "5*";
 char CLAVE_SALIR5[3] = "5#";
 
+char CLAVE_LOG[3] = "##";
+
+
 /*
 char CLAVE_VER10[3] = "10*";
 char CLAVE_SALIR10[3] = "10#";
@@ -90,27 +95,37 @@ void setup(){
 
 //Habitación 1
   tft.drawRoundRect(10,10,48,40,5,BLUE);  tft.drawRoundRect(60,10,162,40,5,BLUE);  tft.drawRoundRect(225,10,90,40,5, BLUE);
-  tft.fillRoundRect(11,11,46,38,5,BLACK); tft.fillRoundRect(61,11,160,38,5,BLACK); tft.fillRoundRect(226,11,88,38,5,BLACK);
+  tft.fillRoundRect(11,11,46,38,5,BLACK); tft.fillRoundRect(61,11,160,38,5,WHITE); tft.fillRoundRect(226,11,88,38,5,YELLOW);
 
   tft.setTextColor(WHITE);
   tft.setTextSize(4);
   tft.setCursor(25,15);                   
   tft.print("1");
 
+  tft.setTextColor(BLUE);
+  tft.setTextSize(2);
+  tft.setCursor(240,23);                   //
+  tft.print("LIBRE");
+
 //Habitación 2
 
   tft.drawRoundRect(10,52,48,40,5,BLUE);  tft.drawRoundRect(60,52,162,40,5,BLUE);  tft.drawRoundRect(225,52,90,40,5, BLUE);
-  tft.fillRoundRect(11,53,46,38,5,BLACK); tft.fillRoundRect(61,53,160,38,5,BLACK); tft.fillRoundRect(226,53,88,38,5,BLACK);
+  tft.fillRoundRect(11,53,46,38,5,BLACK); tft.fillRoundRect(61,53,160,38,5,WHITE); tft.fillRoundRect(226,53,88,38,5,YELLOW);
 
   tft.setTextColor(WHITE);
   tft.setTextSize(4);
   tft.setCursor(25,57);                   //
   tft.print("2");
 
+  tft.setTextColor(BLUE);
+  tft.setTextSize(2);
+  tft.setCursor(243,65);                   //
+  tft.print("LIBRE");
+
 //Habitación 3
 
   tft.drawRoundRect(10,94,48,40,5,BLUE);  tft.drawRoundRect(60,94,162,40,5,BLUE);  tft.drawRoundRect(225,94,90,40,5, BLUE);
-  tft.fillRoundRect(11,95,46,38,5,BLACK); tft.fillRoundRect(61,95,160,38,5,BLACK); tft.fillRoundRect(226,95,88,38,5,BLACK);
+  tft.fillRoundRect(11,95,46,38,5,BLACK); tft.fillRoundRect(61,95,160,38,5,WHITE); tft.fillRoundRect(226,95,88,38,5,WHITE);
 
   tft.setTextColor(WHITE);
   tft.setTextSize(4);
@@ -120,7 +135,7 @@ void setup(){
 //Habitación 4
 
   tft.drawRoundRect(10,136,48,40,5,BLUE);  tft.drawRoundRect(60,136,162,40,5,BLUE);  tft.drawRoundRect(225,136,90,40,5, BLUE);
-  tft.fillRoundRect(11,137,46,38,5,BLACK); tft.fillRoundRect(61,137,160,38,5,BLACK); tft.fillRoundRect(226,137,88,38,5,BLACK);
+  tft.fillRoundRect(11,137,46,38,5,BLACK); tft.fillRoundRect(61,137,160,38,5,WHITE); tft.fillRoundRect(226,137,88,38,5,WHITE);
 
   tft.setTextColor(WHITE);
   tft.setTextSize(4);
@@ -131,7 +146,7 @@ void setup(){
 //Habitación 5
 
   tft.drawRoundRect(10,178,48,40,5,BLUE);  tft.drawRoundRect(60,178,162,40,5,BLUE);  tft.drawRoundRect(225,178,90,40,5, BLUE);
-  tft.fillRoundRect(11,179,46,38,5,BLACK); tft.fillRoundRect(61,179,160,38,5,BLACK); tft.fillRoundRect(226,179,88,38,5,BLACK);
+  tft.fillRoundRect(11,179,46,38,5,BLACK); tft.fillRoundRect(61,179,160,38,5,WHITE); tft.fillRoundRect(226,179,88,38,5,WHITE);
 
   tft.setTextColor(WHITE);
   tft.setTextSize(4);
@@ -140,6 +155,9 @@ void setup(){
 }
 
 
+
+//////////Habitación 1//////////
+
 void Entrada1(){
 
   DateTime fecha = rtc.now();
@@ -147,7 +165,7 @@ void Entrada1(){
   tft.drawRoundRect(60,10,162,40,5,BLUE);  tft.drawRoundRect(225,10,90,40,5, BLUE);
   tft.fillRoundRect(61,11,160,38,5,BLACK); tft.fillRoundRect(226,11,88,38,5,BLACK);
   
-  tft.setTextColor(WHITE);
+  tft.setTextColor(GREEN);
   tft.setTextSize(2);
   tft.setCursor(230,15);                   //
   tft.print("Entrada");
@@ -175,6 +193,48 @@ void Entrada1(){
 
 }
 
+void Salida1(){
+  DateTime fecha = rtc.now();
+  
+  tft.setTextColor(RED);
+  tft.setTextSize(2);
+  tft.setCursor(235,32);                   
+  tft.print("Salida");
+  tft.setCursor(63,32); 
+  tft.print(fecha.day());                 
+  tft.print("/");
+  tft.print(fecha.month());
+  tft.print("-");
+  tft.print(fecha.hour());
+  tft.print(":");
+  tft.print(fecha.minute());
+  tft.print(":");
+  tft.print(fecha.second());
+    
+  Serial.print(fecha.day());
+  Serial.print("/");
+  Serial.print(fecha.month());
+  Serial.print("-");
+  Serial.print(fecha.hour());
+  Serial.print(":");
+  Serial.print(fecha.minute());
+  Serial.print(":");
+  Serial.print(fecha.second());
+  Serial.println("");
+
+  delay(tiempo);
+/////Disponible/////  
+  tft.fillRoundRect(61,11,160,38,5,WHITE); tft.fillRoundRect(226,11,88,38,5,YELLOW);
+  tft.setTextColor(BLUE);
+  tft.setTextSize(2);
+  tft.setCursor(243,23);                   //
+  tft.print("LIBRE");
+
+}
+
+
+//////////Habitación 2//////////
+
 void Entrada2(){
 
   DateTime fecha = rtc.now();
@@ -183,7 +243,7 @@ void Entrada2(){
   tft.fillRoundRect(61,53,160,38,5,BLACK); tft.fillRoundRect(226,53,88,38,5,BLACK);
 
    
-  tft.setTextColor(WHITE);
+  tft.setTextColor(GREEN);
   tft.setTextSize(2);
   tft.setCursor(230,54);                   //
   tft.print("Entrada");
@@ -211,50 +271,12 @@ void Entrada2(){
 
 }
 
-void Salida1(){
-  DateTime fecha = rtc.now();
-  
-  tft.setTextColor(WHITE);
-  tft.setTextSize(2);
-  tft.setCursor(235,32);                   
-  tft.print("Salida");
-  tft.setCursor(63,32); 
-  tft.print(fecha.day());                 
-  tft.print("/");
-  tft.print(fecha.month());
-  tft.print("-");
-  tft.print(fecha.hour());
-  tft.print(":");
-  tft.print(fecha.minute());
-  tft.print(":");
-  tft.print(fecha.second());
-    
-  Serial.print(fecha.day());
-  Serial.print("/");
-  Serial.print(fecha.month());
-  Serial.print("-");
-  Serial.print(fecha.hour());
-  Serial.print(":");
-  Serial.print(fecha.minute());
-  Serial.print(":");
-  Serial.print(fecha.second());
-  Serial.println("");
 
-}
 
 void Salida2(){
   DateTime fecha = rtc.now();
-  /*tft.fillScreen(WHITE);
-
-  tft.drawRoundRect(10,10,135,50,5,BLUE);  tft.drawRoundRect(200,10,90,50,5, BLUE);
-  tft.fillRoundRect(11,11,133,48,5,BLACK); tft.fillRoundRect(201,11,88,48,5,BLACK);
-  
-  tft.drawRoundRect(60,52,162,40,5,BLUE);  tft.drawRoundRect(225,52,90,40,5, BLUE);
-  tft.fillRoundRect(61,53,160,38,5,BLACK); tft.fillRoundRect(226,53,88,38,5,BLACK);
-  */
-
-  
-  tft.setTextColor(WHITE);
+    
+  tft.setTextColor(RED);
   tft.setTextSize(2);
   tft.setCursor(235,74);                   
   tft.print("Salida");
@@ -280,7 +302,18 @@ void Salida2(){
   Serial.print(fecha.second());
   Serial.println("");
 
+  delay(tiempo);
+/////Disponible/////
+  tft.fillRoundRect(61,53,160,38,5,WHITE); tft.fillRoundRect(226,53,88,38,5,YELLOW);
+  tft.setTextColor(BLUE);
+  tft.setTextSize(2);
+  tft.setCursor(243,65);                   //
+  tft.print("LIBRE");
+
 }
+
+
+
 
 void loop(){
    
@@ -296,42 +329,47 @@ void loop(){
 //////////////////Habitación 1//////////////////////
   if(INDICE == 2){       // si ya se almacenaron los 6 digitos
      if(!strcmp(CLAVE, CLAVE_VER1)){   // compara clave ingresada con clave maestra
-     Serial.println(" Correcta");  // imprime en monitor serial que es correcta la clave
+     Serial.println(" Ingreso");  // imprime en monitor serial que es correcta la clave
      INDICE = 0;
      Entrada1();
+     }
      }
 
      if(INDICE == 2){       // si ya se almacenaron los 6 digitos
      if(!strcmp(CLAVE, CLAVE_SALIR1)){   // compara clave ingresada con clave maestra
-     Serial.println(" Correcta");  // imprime en monitor serial que es correcta la clave
+     Serial.println(" Egreso");  // imprime en monitor serial que es correcta la clave
      INDICE = 0;
      Salida1();
      }
+     }
+
+
 
 //////////////////Habitación 2//////////////////////
-
-     if(INDICE == 2){       // si ya se almacenaron los 6 digitos
+  if(INDICE == 2){       // si ya se almacenaron los 6 digitos
      if(!strcmp(CLAVE, CLAVE_VER2)){   // compara clave ingresada con clave maestra
-     Serial.println(" Correcta");  // imprime en monitor serial que es correcta la clave
+     Serial.println(" Ingreso");  // imprime en monitor serial que es correcta la clave
      INDICE = 0;
      Entrada2();
      }
+     }
+
 
      if(INDICE == 2){       // si ya se almacenaron los 6 digitos
      if(!strcmp(CLAVE, CLAVE_SALIR2)){   // compara clave ingresada con clave maestra
-     Serial.println(" Correcta");  // imprime en monitor serial que es correcta la clave
+     Serial.println(" Egreso");  // imprime en monitor serial que es correcta la clave
      INDICE = 0;
      Salida2();
      }
     
      else
-     Serial.println(" Incorrecta");  // imprime en monitor serial que es incorrecta la clave
+     Serial.println(" ");  // imprime en monitor serial que es incorrecta la clave
      INDICE = 0;
+    
     }
-
-
-  
-}}}}
+    
+    
+    }
 
 
 
